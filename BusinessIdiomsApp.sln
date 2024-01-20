@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33717.318
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BusinessIdiomsApp", "BusinessIdiomsApp\BusinessIdiomsApp.vcxproj", "{20C25B3D-C1CD-48BF-B3AE-D0DC1B4BEC8B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20C25B3D-C1CD-48BF-B3AE-D0DC1B4BEC8B}.Debug|x64.ActiveCfg = Debug|x64
+		{20C25B3D-C1CD-48BF-B3AE-D0DC1B4BEC8B}.Debug|x64.Build.0 = Debug|x64
+		{20C25B3D-C1CD-48BF-B3AE-D0DC1B4BEC8B}.Debug|x86.ActiveCfg = Debug|Win32
+		{20C25B3D-C1CD-48BF-B3AE-D0DC1B4BEC8B}.Debug|x86.Build.0 = Debug|Win32
+		{20C25B3D-C1CD-48BF-B3AE-D0DC1B4BEC8B}.Release|x64.ActiveCfg = Release|x64
+		{20C25B3D-C1CD-48BF-B3AE-D0DC1B4BEC8B}.Release|x64.Build.0 = Release|x64
+		{20C25B3D-C1CD-48BF-B3AE-D0DC1B4BEC8B}.Release|x86.ActiveCfg = Release|Win32
+		{20C25B3D-C1CD-48BF-B3AE-D0DC1B4BEC8B}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6D7B3F1B-30E0-4856-9529-877F0521217C}
+	EndGlobalSection
+EndGlobal
