@@ -6,11 +6,27 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Compile
-        run: g++ -o BusinessIdiomsApp.exe BusinessIdiomsApp.cpp
+      - uses: actions/checkout@v3
+      
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.1
+      
+      - name: Install dependencies
+        run: choco install mingw -y
+      
+      - name: Compile with g++
+        run: g++ -o BusinessIdiomsApp.exe BusinessIdiomsApp.cpp -std=c++17
+      
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          name: BusinessIdiomsApp.exe
+          name: BusinessIdiomsApp-Release
           path: BusinessIdiomsApp.exe
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: BusinessIdiomsApp.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
