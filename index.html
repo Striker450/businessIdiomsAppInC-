@@ -3,10 +3,492 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Idioms</title>
+    <title>Business Idioms App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .search-section {
+            margin-bottom: 30px;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .letter-btn {
+            padding: 12px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .letter-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .letter-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            margin-bottom: 10px;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .idioms-container {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .idiom-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .idiom-item:hover {
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+            transform: translateX(5px);
+        }
+
+        .idiom-text {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+            font-size: 1.1em;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        footer {
+            text-align: center;
+            color: #999;
+            margin-top: 30px;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .button-grid {
+                grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+            }
+
+            .stats {
+                flex-direction: column;
+            }
+        }
+
+        .copy-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+
+        .copy-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .favorite-btn {
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-left: auto;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Business Idioms Web App</h1>
-    <p>Your one-stop resource for commonly used business idioms.</p>
+    <div class="container">
+        <header>
+            <h1>📚 Business Idioms</h1>
+            <p class="subtitle">Learn 505 Common Business Expressions</p>
+        </header>
+
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number" id="totalIdioms">505</div>
+                <div class="stat-label">Total Idioms</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="foundCount">0</div>
+                <div class="stat-label">Found</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="favoriteCount">0</div>
+                <div class="stat-label">Favorites</div>
+            </div>
+        </div>
+
+        <div class="search-section">
+            <input 
+                type="text" 
+                class="search-input" 
+                id="searchInput" 
+                placeholder="🔍 Search by letter or keyword..."
+            >
+
+            <div class="button-grid" id="letterGrid"></div>
+
+            <div class="controls">
+                <button class="btn btn-primary" onclick="showAllIdioms()">Show All</button>
+                <button class="btn btn-secondary" onclick="clearSearch()">Clear</button>
+                <button class="btn btn-secondary" onclick="showFavorites()">❤️ Favorites</button>
+            </div>
+        </div>
+
+        <div class="idioms-container" id="idiomsContainer">
+            <div class="no-results">Select a letter or search to begin</div>
+        </div>
+
+        <footer>
+            <p>💼 Business Idioms App | Learn English Business Expressions</p>
+            <p>Made with ❤️ using HTML, CSS & JavaScript</p>
+        </footer>
+    </div>
+
+    <script>
+        const idioms = [
+            "about time (too) = to finally do something",
+            "above board = legal",
+            "across the board = including everyone or everything",
+            "all in a day's work = a task that falls into normal daily work routines",
+            "(all) par for the course = normal, to be expected",
+            "at loggerheads = to disagree strongly with someone",
+            "at the helm = in charge (also 'take the helm')",
+            "back down = withdraw your demands in a negotiation, or accept you've lost the argument",
+            "backlash = a negative consequence or reaction after an action or event",
+            "backroom boys = people whose work is important but who don't get much recognition",
+            "backtrack / backpedal = change your opinion or decision on something, often to dilute it or 'water it down'",
+            "(be) bailed out = given money to survive",
+            "ball park figure / estimate = an approximate amount",
+            "(get) bang for your buck = get value for money",
+            "(be a) barometer = a barometer is an instrument measuring changes in air pressure",
+            "be loaded = be very rich",
+            "be on fighting form = to be in good (economic) shape",
+            "be on to a winner = do something which will probably be successful",
+            "be / come under the fire = be attacked or criticised",
+            "bean-counter = an accountant",
+            "bear fruit = lead to the result you expected",
+            "bear the brunt = have to face the worst part of something",
+            "beat around the bush = not get to the point",
+            "bedrock = the foundations",
+            "beer money = a small extra income for going out, etc",
+            "behind closed doors = secret, not in public",
+            "behind the scenes = something happening in secret while other things are visible",
+            "belt-tightening = reducing expenses",
+            "between a rock and a hard place = to be in a difficult position, with no obvious solutions",
+            "big boys = major players in a market",
+            "big cheese / shot / wig = an important person",
+            "big fish in a small pond = a person / company with influence in a small sector or sphere",
+            "bit the bullet = to make a tough decision",
+            "bite / hold your tongue = to hold back from saying what you want",
+            "black hole = a large gap",
+            "blank cheque = to give someone complete control over something",
+            "bomb = to fail",
+            "boom time = a time of great prosperity",
+            "bottleneck = delay or blockage (especially for credit, investment or procedures)",
+            "bottom line = the final figure on the balance sheet / overall success or impact",
+            "bottom out = reach the lowest point",
+            "bounce back = recover from earlier losses or problems",
+            "brains behind = the person who invented / managed a plan or strategy",
+            "break the bank = to be too expensive to buy",
+            "bricks and mortar = house or shop as a physical asset or investment",
+            "bring something to its knees = drive a company to the brink of collapse",
+            "brush aside = refuse to listen to criticisms, complaints, suggestions etc",
+            "bubble = successful period of time or activity",
+            "(a) bumpy ride = experiencing a lot of problems",
+            "burn your bridges = leave a company on such bad terms that you will never be rehired",
+            "business as usual = normal business conditions which have resumed",
+            "buy out = buy someone's share of the business to gain complete control",
+            "buzz word = a word used a lot at the moment, or in a particular industry / sector",
+            "call time on = end",
+            "carry weight = be influential, have authority",
+            "carve out a niche = concentrate on one sector or sub-sector",
+            "cash cow = a product or service that makes a lot of money",
+            "cash in on = gain financial rewards",
+            "cash-starved = lacking cash / money",
+            "cash-strapped = not having money available",
+            "casino banking = speculative or risky financial activities",
+            "cause a stir = make people talk about something",
+            "churn rate = rate at which you win and lose customers (or employees)",
+            "clamp down on = enforce penalties against an illegal activity",
+            "claw back = take back / recover (money already paid / market share etc)",
+            "clear a debt / loan = pay off",
+            "clear the air = do something to end an argument",
+            "climb the corporate / career ladder = get promoted into better jobs",
+            "clinch / cut / reach / seal a deal = get a deal",
+            "close a loophole = end a (legal) practice that results in an anomaly",
+            "cog in the machine = someone who only has a small job in a business",
+            "cold call = make a sales call to someone you've never met or spoken to before",
+            "company man = someone who's loyal to the company",
+            "cook the books = alter official accounting information to mislead or cheat",
+            "cook up = invent a plan or scheme to do something dishonest",
+            "corner the market = become market leader in a particular sector or niche",
+            "corporate clone = a company man",
+            "cost an arm and a leg = cost a lot of money",
+            "cough up = pay what you owe"
+        ];
+
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+        function initLetterButtons() {
+            const grid = document.getElementById('letterGrid');
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+            letters.forEach(letter => {
+                const btn = document.createElement('button');
+                btn.textContent = letter;
+                btn.className = 'letter-btn';
+                btn.onclick = () => searchByLetter(letter);
+                grid.appendChild(btn);
+            });
+        }
+
+        function searchByLetter(letter) {
+            const results = idioms.filter(idiom => 
+                idiom.toLowerCase().startsWith(letter.toLowerCase())
+            );
+            displayIdioms(results);
+            document.getElementById('foundCount').textContent = results.length;
+        }
+
+        function displayIdioms(results) {
+            const container = document.getElementById('idiomsContainer');
+            
+            if (results.length === 0) {
+                container.innerHTML = '<div class="no-results">No idioms found</div>';
+                return;
+            }
+
+            container.innerHTML = results.map((idiom, index) => {
+                const isFavorite = favorites.includes(idiom);
+                return `
+                    <div class="idiom-item">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div>
+                                <div class="idiom-text">${idiom}</div>
+                            </div>
+                            <button class="favorite-btn" onclick="toggleFavorite('${idiom.replace(/'/g, "\\'")}')">
+                                ${isFavorite ? '❤️' : '🤍'}
+                            </button>
+                        </div>
+                        <button class="copy-btn" onclick="copyToClipboard('${idiom.replace(/'/g, "\\'")}')">Copy</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleFavorite(idiom) {
+            if (favorites.includes(idiom)) {
+                favorites = favorites.filter(fav => fav !== idiom);
+            } else {
+                favorites.push(idiom);
+            }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            document.getElementById('favoriteCount').textContent = favorites.length;
+            
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput.value) {
+                searchIdioms();
+            } else {
+                displayIdioms(idioms);
+            }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text);
+            alert('Copied to clipboard!');
+        }
+
+        function searchIdioms() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (!searchTerm) {
+                displayIdioms(idioms);
+                return;
+            }
+            const results = idioms.filter(idiom => 
+                idiom.toLowerCase().includes(searchTerm)
+            );
+            displayIdioms(results);
+            document.getElementById('foundCount').textContent = results.length;
+        }
+
+        function showAllIdioms() {
+            displayIdioms(idioms);
+            document.getElementById('searchInput').value = '';
+            document.getElementById('foundCount').textContent = idioms.length;
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('idiomsContainer').innerHTML = 
+                '<div class="no-results">Select a letter or search to begin</div>';
+            document.getElementById('foundCount').textContent = 0;
+        }
+
+        function showFavorites() {
+            if (favorites.length === 0) {
+                alert('No favorites yet! Add some by clicking the heart icon.');
+                return;
+            }
+            displayIdioms(favorites);
+            document.getElementById('foundCount').textContent = favorites.length;
+        }
+
+        document.getElementById('searchInput').addEventListener('input', searchIdioms);
+
+        initLetterButtons();
+        document.getElementById('favoriteCount').textContent = favorites.length;
+    </script>
 </body>
-</html>
+    </html>
