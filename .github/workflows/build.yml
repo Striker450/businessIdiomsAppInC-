@@ -1,0 +1,16 @@
+name: Build BusinessIdiomsApp
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Compile
+        run: g++ -o BusinessIdiomsApp.exe BusinessIdiomsApp.cpp
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: BusinessIdiomsApp.exe
+          path: BusinessIdiomsApp.exe
