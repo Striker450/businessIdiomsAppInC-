@@ -6,12 +6,13 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      
       - name: Compile
-        run: |
-          g++ -o BusinessIdiomsApp.exe BusinessIdiomsApp.cpp
-      - name: Upload
-        uses: actions/upload-artifact@v3
+        run: g++ -o BusinessIdiomsApp.exe BusinessIdiomsApp.cpp
+      
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
         with:
           name: BusinessIdiomsApp
           path: BusinessIdiomsApp.exe
